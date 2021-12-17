@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)https://www.geopeitus.ee/aare/7302 -->
+<html lang="et"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" async="" src="./Geopeitus.ee __ Xmas Spirit_files/analytics.js.Allalaaditud fail"></script><script async="" src="./Geopeitus.ee __ Xmas Spirit_files/js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-154716906-1');
+    </script>
+
+    <title>Geopeitus.ee :: Xmas Spirit</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate" type="application/rss+xml" title="Geopeituse uued logiteated" href="https://www.geopeitus.ee/gplog.xml">
+    <link rel="alternate" type="application/rss+xml" title="Geopeituse uued aarded" href="https://www.geopeitus.ee/gpcache.xml">
+    <link rel="alternate" type="application/rss+xml" title="Geopeituse teated foorumist" href="https://www.geopeitus.ee/gpforum.xml">
+    <link rel="icon" type="image/png" href="https://www.geopeitus.ee/ug/gpicon.png">
+    <link rel="stylesheet" href="./Geopeitus.ee __ Xmas Spirit_files/reset.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="./Geopeitus.ee __ Xmas Spirit_files/n-screen.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="./Geopeitus.ee __ Xmas Spirit_files/n-print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="./Geopeitus.ee __ Xmas Spirit_files/jquery.fancybox-1.3.4.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="./Geopeitus.ee __ Xmas Spirit_files/icon">
+	<script type="text/javascript" src="./Geopeitus.ee __ Xmas Spirit_files/jquery.min.js.Allalaaditud fail"></script>
+    <script type="text/javascript" src="./Geopeitus.ee __ Xmas Spirit_files/jquery.fancybox-1.3.4.pack.js.Allalaaditud fail"></script>
+    <script type="text/javascript" src="./Geopeitus.ee __ Xmas Spirit_files/jquery.dimensions.min.js.Allalaaditud fail"></script>
+    <script type="text/javascript" src="./Geopeitus.ee __ Xmas Spirit_files/jquery.tooltip.min.js.Allalaaditud fail"></script>
+    
+<script type="text/javascript">
+
+(function($) {
+    
+    $.fn.rot13 = function() {
+        this.each(function() {
+            $(this).text($(this).text().replace(/[a-z0-9]/ig, function(chr) {
+                var cc = chr.charCodeAt(0);
+                if (cc >= 65 && cc <= 90) cc = 65 + ((cc - 52) % 26);
+                else if (cc >= 97 && cc <= 122) cc = 97 + ((cc - 84) % 26);
+                else if (cc >= 48 && cc <= 57) cc = 48 + ((cc - 43) % 10);
+                return String.fromCharCode(cc);
+            }));
+        });
+        return this;
+    };
+
+})(jQuery);
+
+$(document).ready(function() {
+    $("#cachehint").rot13();
+    $("#cachehint").click(function () { 
+      $(this).rot13(); 
+    });
+	ActivateTooltips();
+});
+
+</script>
+
+
+    <script type="text/javascript" src="./Geopeitus.ee __ Xmas Spirit_files/gp.js.Allalaaditud fail"></script>
+<script type="text/javascript" data-name="TokenSigning">(function() {
+    // Promises
+    var _eid_promises = {};
+    // Turn the incoming message from extension
+    // into pending Promise resolving
+    window.addEventListener("message", function(event) {
+        if (event.source !== window) return;
+        if (event.data.src && (event.data.src === "background.js")) {
+            console.log("Page received: ");
+            console.log(event.data);
+            // Get the promise
+            if (event.data.nonce) {
+                var p = _eid_promises[event.data.nonce];
+                // resolve
+                if (event.data.result === "ok") {
+                    if (event.data.signature !== undefined) {
+                        p.resolve({hex: event.data.signature});
+                    } else if (event.data.version !== undefined) {
+                        p.resolve(event.data.extension + "/" + event.data.version);
+                    } else if (event.data.cert !== undefined) {
+                        p.resolve({hex: event.data.cert});
+                    } else {
+                        console.log("No idea how to handle message");
+                        console.log(event.data);
+                    }
+                } else {
+                    // reject
+                    p.reject(new Error(event.data.result));
+                }
+                delete _eid_promises[event.data.nonce];
+            } else {
+                console.log("No nonce in event msg");
+            }
+        }
+    }, false);
+
+    window.TokenSigning = function() {
+        function nonce() {
+            var val = "";
+            var hex = "abcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < 16; i++) val += hex.charAt(Math.floor(Math.random() * hex.length));
+            return val;
+        }
+
+        function messagePromise(msg) {
+            return new Promise(function(resolve, reject) {
+                // amend with necessary metadata
+                msg["nonce"] = nonce();
+                msg["src"] = "page.js";
+                // send message
+                window.postMessage(msg, "*");
+                // and store promise callbacks
+                _eid_promises[msg.nonce] = {
+                    resolve: resolve,
+                    reject: reject
+                };
+            });
+        }
+        this.getCertificate = function(options) {
+            var msg = {type: "CERT", lang: options.lang, filter: options.filter};
+            console.log("getCertificate()");
+            return messagePromise(msg);
+        };
+        this.sign = function(cert, hash, options) {
+            var msg = {type: "SIGN", cert: cert.hex, hash: hash.hex, hashtype: hash.type, lang: options.lang, info: options.info};
+            console.log("sign()");
+            return messagePromise(msg);
+        };
+        this.getVersion = function() {
+            console.log("getVersion()");
+            return messagePromise({
+                type: "VERSION"
+            });
+        };
+    };
+})();</script></head>
+<body>
+<div id="wrap">
+<div id="header">
+
+  <div class="left">
+    <a href="https://www.geopeitus.ee/"><img src="./Geopeitus.ee __ Xmas Spirit_files/gplogo.png" alt="Geopeitus.ee"></a>
+  </div>
+
+  <div class="right">
+    <form method="get" action="https://www.geopeitus.ee/index.php" class="gpform">
+    <input type="hidden" name="p" value="301">
+    <input name="name" type="text" maxlength="100" size="20" value="">
+    <input type="submit" value="Otsi">
+    </form>
+  </div>
+
+</div>
+
+<div id="menubar">
+  <span id="mapmenu">
+    <a href="https://www.geopeitus.ee/?p=428" title="Kaart"><i class="material-icons">map</i></a>
+  </span>
+
+  <span id="mainmenu">
+    <a href="https://www.geopeitus.ee/">Avaleht</a> | <a href="https://www.geopeitus.ee/?p=300">Aardeotsing</a> | <a href="https://www.geopeitus.ee/?p=400">Minu Geopeitus</a> | <a href="https://www.geopeitus.ee/foorum/pm.php">Postkast</a> | <a href="https://www.geopeitus.ee/foorum/">Foorum</a> | <a href="https://www.geopeitus.ee/?p=510">Toetajad</a> | <a href="https://www.geopeitus.ee/?p=500">In English</a>
+  </span>
+
+  <div id="rightmenu">
+          <a href="https://www.geopeitus.ee/wiki/reeglid">Mis on geopeitus: juhised ja reeglid</a>
+      </div>
+</div>
+    <div id="random_tip"><i class="material-icons" style="color: #ffca28">notification_important</i>Kui sa leiad, et aare on peidetud juhiseid rikkudes, võid sellest teada anda.</div>
+
+<div class="clearer"></div>
+
+<div id="t-left">
+
+<div>
+
+<img src="./Geopeitus.ee __ Xmas Spirit_files/user.png" class="icon16" border="0" alt=""> Ove Uhtlik [ove]<br>
+<img src="./Geopeitus.ee __ Xmas Spirit_files/key_delete.png" class="icon16" border="0" alt=""> <a href="https://www.geopeitus.ee/site/logout?uri=%2Faare%2F7302">Logi välja</a>
+
+</div>
+
+<div>
+<p class="title" style="text-align:center">Toeta Eesti geopeitust!<br><a href="https://www.geopeitus.ee/wiki/toetamine">Miks ja kuidas toetada?</a>
+</p>
+</div>
+
+    <div>
+
+
+    <p class="title">Xmas Spirit</p>
+<p><b><a href="https://www.geopeitus.ee/logs/new/c/7302"><img src="./Geopeitus.ee __ Xmas Spirit_files/comments_add.png" class="icon16" border="0" alt=""> Lisa logiteade</a></b></p>
+<p><b><a href="https://www.geopeitus.ee/?p=403&amp;c=7302"><img src="./Geopeitus.ee __ Xmas Spirit_files/email_add.png" class="icon16" border="0" alt=""> Logid emailile</a></b></p>
+<p><b><span id="cIgn"><a href="javascript:IgnoreCache(&#39;7302&#39;);"><img src="./Geopeitus.ee __ Xmas Spirit_files/table_delete.png" class="icon16" border="0" alt=""> Ignoreeri</a></span></b></p>
+
+
+<br>
+<p><b><a href="https://www.geopeitus.ee/foorum/posting.php?9"><img src="./Geopeitus.ee __ Xmas Spirit_files/email_add.png" class="icon16" border="0" alt=""> Kiri administraatoritele</a></b></p>
+<br>
+
+</div>
+
+</div>
+
+<div id="t-content-wrap">
+<div id="t-content">
+    
+<div class="cacheinfo">
+
+<div>
+<h1>
+<a name="top" class="tt"><img src="./Geopeitus.ee __ Xmas Spirit_files/7.png" class="left"></a>
+Xmas Spirit
+</h1>
+<p>Peitis 09.12.21 Anneli ja Reino [<a href="https://www.geopeitus.ee/?p=400&amp;u=errvee">errvee</a>]</p>
+</div>
+
+<table cellpadding="2" cellspacing="0" border="0"><tbody><tr><td width="210" align="left"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/gpkaart.php" alt=""></td><td>WGS84 dd mm ss.s: <b>58° 21' 50.00" 26° 44' 55.00"</b><br>WGS84 dd mm.mmm: <b>58° 21.8333' 26° 44.9167'</b><br>dd.dddd: <b>58.363888 26.748611</b> L-Est: <b>660828 6472559</b><br><b>Kaardid:</b> <a href="https://www.geopeitus.ee/?p=428&amp;x=58.3605155945&amp;y=26.7325992584">Geopeitus</a> |&nbsp;<a href="https://xgis.maaamet.ee/xgis2/page/app/maainfo?punkt=659906,6472146&amp;moot=2000">Maaamet</a> (<a href="https://xgis.maaamet.ee/maps/XGis?app_id=UU82A&amp;user_id=at&amp;LANG=1&amp;moot=2000&amp;punkt=659906,6472146&amp;setlegend=UUKAT1_82=0,UUKAT1L_82=0">vana</a>) |&nbsp;<a href="https://maps.google.com/maps?q=58.3605155945,26.7325992584">Google</a> |&nbsp;<a href="https://www.waze.com/ul?navigate=yes&amp;ll=58.3605155945%2C26.7325992584">Waze</a> |&nbsp;<a href="https://www.bing.com/maps/default.aspx?cp=58.3605155945~26.7325992584&amp;lvl=15&amp;sp=Point.58.3605155945_26.7325992584_Xmas%20Spirit_M%C3%B5istatusaare%201.5/1.5%20mikro_https://www.geopeitus.ee/aare/7302_https://www.geopeitus.ee/ug/cicons/7.png">Bing</a> |&nbsp;<a href="https://www.openstreetmap.org/?mlat=58.3605155945&amp;mlon=26.7325992584&amp;zoom=12">OSM</a><br>Tüüp: <b>Mõistatusaare</b> &nbsp;&nbsp;Maakond / linn: <b>Tartu linn</b><br><b>Raskusaste:</b> peidukoht 1.5, maastik 1.5 <b>Suurus:</b> mikro<br><b>Lae alla:</b><a class="tt" href="https://www.geopeitus.ee/?p=301&amp;format=6&amp;c=7302"><img src="./Geopeitus.ee __ Xmas Spirit_files/phone.png" class="icon16" border="0" alt="">GPX</a><a class="tt" href="https://www.geopeitus.ee/lmx/xmasspirit"><img src="./Geopeitus.ee __ Xmas Spirit_files/phone.png" class="icon16" border="0" alt="">Nokia</a><a class="tt" rel="lightbox" href="https://chart.apis.google.com/chart?cht=qr&amp;chs=300x300&amp;chld=H|0&amp;chl=http%3A%2F%2Fwww.geopeitus.ee%2Flmx%2Fxmasspirit&amp;foo=.png"><img src="./Geopeitus.ee __ Xmas Spirit_files/phone.png" class="icon16" border="0" alt="">Nokia QR-kood</a><a class="tt" href="tomtomhome:geo:lat=58.3638877869&amp;long=26.7486114502&amp;name=Xmas%20Spirit"><img src="./Geopeitus.ee __ Xmas Spirit_files/phone.png" class="icon16" border="0" alt="">TomTom</a></td></tr></tbody></table>
+
+
+
+
+<p style="clear: left;"><b>Kirjeldus:</b></p>
+<div class="cache-description"><p>Aare on peidetud 2021. aasta detsembriseeria 9. detsembri aardena.</p>
+
+<p>See pusle viib kokku jõulumeeleolu ja minu lemmikud - hurdalised. Mis viisil, see selgub pärast selle <a href="https://www.jigidi.com/solve/n6in6f4t">pusle</a> lahendamist. Ja koht, kuskohas tasub aardetopsi otsida, selgub ka. </p>
+</div>
+
+
+<p><b>Vihje:</b> <a href="https://www.geopeitus.ee/aare/7302#" onclick="$(&quot;#cachehint&quot;).rot13(); return false;" class="tt"><img src="./Geopeitus.ee __ Xmas Spirit_files/arrow_switch.png" class="icon16" border="0" alt=""></a> <span id="cachehint">J</span></p>
+<div class="decrypthint">
+<div style="border-bottom:1px solid #333"><pre>A|B|C|D|E|F|G|H|I|J|K|L|M|0|1|2|3|4</pre></div>
+<div><pre>N|O|P|Q|R|S|T|U|V|W|X|Y|Z|5|6|7|8|9</pre></div>
+</div>
+<p><b>Lingid:</b> <a target="_new" href="https://www.jigidi.com/solve/n6in6f4t"><img class="icon16" alt="" border="0" src="./Geopeitus.ee __ Xmas Spirit_files/world_link.png"> https://www.jigidi.com/solve/n6in6f4t</a> </p>
+
+
+    
+
+    <p><b>Minu märkmed:</b>
+    	<a id="mynote-add" href="javascript:MynoteAdd()" class="tt notprinted"><img src="./Geopeitus.ee __ Xmas Spirit_files/pencil_go.png" class="icon16" border="0" alt=""></a>
+	<a id="mynote-save" style="display: none;" href="javascript:MynoteSave(&#39;7302&#39;)" class="tt notprinted"><img src="./Geopeitus.ee __ Xmas Spirit_files/table_save.png" class="icon16" border="0" alt=""> Salvesta</a> <span id="mynote-status"></span><br>
+	</p><div id="mynote-wrap" style="display: none;"><textarea cols="40" rows="4" style="left: -99999px; position: absolute; top: -99999px; height: 0px; letter-spacing: normal; line-height: normal; text-decoration: none solid rgb(0, 0, 0); width: 100px;" tabindex="-1"></textarea><textarea id="mynote" cols="40" rows="4" style="overflow: hidden; resize: none; height: 20px;"></textarea></div>
+        <p></p>
+
+	<p><b>Minu aarde koordinaadid:</b>
+    		58° 21.6309' 26° 43.9560'
+		<a class="tt iframe" href="https://www.geopeitus.ee/?p=4512&amp;c=7302"><img src="./Geopeitus.ee __ Xmas Spirit_files/pencil.png" class="icon16" border="0" alt=""></a>
+    
+
+</p><p>
+<img src="./Geopeitus.ee __ Xmas Spirit_files/tag_blue.png" class="icon16" border="0" alt=""> <b>Minu sildid</b>: <a href="https://www.geopeitus.ee/aare/7302#" id="tagadd-button" class="tt"><img src="./Geopeitus.ee __ Xmas Spirit_files/tag_blue_add.png" class="icon16" border="0" alt=""></a> <span id="mytags">
+</span><br>
+</p><div style="display: none;" id="tagadd">
+<table style="width: 100%"><tbody><tr><td style="width: 40%">
+<b>Üldised: </b><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;2020_aasta_aarde_kandidaat&#39; );" class="tt"><b>2020_aasta_aarde_kandidaat</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;2021_aasta_aarde_kandidaat&#39; );" class="tt"><b>2021_aasta_aarde_kandidaat</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;adopteerimiseks&#39; );" class="tt"><b>adopteerimiseks</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;omanikuta&#39; );" class="tt"><b>omanikuta</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;soovitan&#39; );" class="tt"><b>soovitan</b></a><br>
+<br><b>Abivahendid:</b><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;chirp&#39; );" class="tt"><b>chirp</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;erivarustus&#39; );" class="tt"><b>erivarustus</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;gpsita_leitav&#39; );" class="tt"><b>gpsita_leitav</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;pliiats_kaasa&#39; );" class="tt"><b>pliiats_kaasa</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;räätsad&#39; );" class="tt"><b>räätsad</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;taskulamp&#39; );" class="tt"><b>taskulamp</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;uv-lamp&#39; );" class="tt"><b>uv-lamp</b></a><br>
+<br><b>Hoiatused:</b><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;eramaa&#39; );" class="tt"><b>eramaa</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;ettevaatus_vajalik&#39; );" class="tt"><b>ettevaatus_vajalik</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;kellaajaline_juurdepääs&#39; );" class="tt"><b>kellaajaline_juurdepääs</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;liikumispiirang&#39; );" class="tt"><b>liikumispiirang</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;muguoht&#39; );" class="tt"><b>muguoht</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;puugid&#39; );" class="tt"><b>puugid</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;rästikud&#39; );" class="tt"><b>rästikud</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;tasuline_parkla&#39; );" class="tt"><b>tasuline_parkla</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;tasuline_sissepääs&#39; );" class="tt"><b>tasuline_sissepääs</b></a><br>
+</td><td style="width: 30%">
+<b>Harrastused:</b><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;discgolf&#39; );" class="tt"><b>discgolf</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;kalastuskoht&#39; );" class="tt"><b>kalastuskoht</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;maasturiga_huvitav&#39; );" class="tt"><b>maasturiga_huvitav</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;marjad&#39; );" class="tt"><b>marjad</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;rulluisurada&#39; );" class="tt"><b>rulluisurada</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;seened&#39; );" class="tt"><b>seened</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;surfikoht&#39; );" class="tt"><b>surfikoht</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;viburada&#39; );" class="tt"><b>viburada</b></a><br>
+<br><b>Sariaarded:</b><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;advendiseeria_2020&#39; );" class="tt"><b>advendiseeria_2020</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;advendiseeria_2021&#39; );" class="tt"><b>advendiseeria_2021</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;ajaloo_seeria&#39; );" class="tt"><b>ajaloo_seeria</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;ametite_seeria&#39; );" class="tt"><b>ametite_seeria</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;eesti_kirjanikud&#39; );" class="tt"><b>eesti_kirjanikud</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;kalakaitse&#39; );" class="tt"><b>kalakaitse</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;pusleaare&#39; );" class="tt"><b>pusleaare</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;välismaa_kirjanikud&#39; );" class="tt"><b>välismaa_kirjanikud</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;väljakutse&#39; );" class="tt"><b>väljakutse</b></a><br>
+</td><td style="width: 30%">
+<b>Mida oodata:</b><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;drive-in&#39; );" class="tt"><b>drive-in</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;ilus_vaade&#39; );" class="tt"><b>ilus_vaade</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;lahe_teostus&#39; );" class="tt"><b>lahe_teostus</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;lastekäruga_ligipääsetav&#39; );" class="tt"><b>lastekäruga_ligipääsetav</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;lastesõbralik&#39; );" class="tt"><b>lastesõbralik</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;laudtee&#39; );" class="tt"><b>laudtee</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;lemmikloomasõbralik&#39; );" class="tt"><b>lemmikloomasõbralik</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;lõkkeplats&#39; );" class="tt"><b>lõkkeplats</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;lühem_matk&#39; );" class="tt"><b>lühem_matk</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;lumega_leitav&#39; );" class="tt"><b>lumega_leitav</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;lumega_raske&#39; );" class="tt"><b>lumega_raske</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;mahajäetud_ehitis&#39; );" class="tt"><b>mahajäetud_ehitis</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;matkarada&#39; );" class="tt"><b>matkarada</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;metsaonn&#39; );" class="tt"><b>metsaonn</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;militaarobjekt&#39; );" class="tt"><b>militaarobjekt</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;oandu-ikla&#39; );" class="tt"><b>oandu-ikla</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;ööaare&#39; );" class="tt"><b>ööaare</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;pikem_matk(&gt;1km)&#39; );" class="tt"><b>pikem_matk(&gt;1km)</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;piknikukoht&#39; );" class="tt"><b>piknikukoht</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;rabamatk&#39; );" class="tt"><b>rabamatk</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;rattaga_raske&#39; );" class="tt"><b>rattaga_raske</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;RMK_matkateed&#39; );" class="tt"><b>RMK_matkateed</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;ronimine&#39; );" class="tt"><b>ronimine</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;telkimiskoht&#39; );" class="tt"><b>telkimiskoht</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;tiimitöö&#39; );" class="tt"><b>tiimitöö</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;ujumiskoht&#39; );" class="tt"><b>ujumiskoht</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;vaatamisväärsus&#39; );" class="tt"><b>vaatamisväärsus</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;väikesaar&#39; );" class="tt"><b>väikesaar</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;välimõistatus&#39; );" class="tt"><b>välimõistatus</b></a><br>
+<a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;võsa&#39; );" class="tt"><b>võsa</b></a><br>
+</td></tr></tbody></table>
+</div>
+<img src="./Geopeitus.ee __ Xmas Spirit_files/tag_green.png" class="icon16" border="0" alt=""> <b>Aarde sildid</b>:
+<b><a href="https://www.geopeitus.ee/silt/pusleaare" class="tt">pusleaare</a></b><a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;pusleaare&#39; );" class="tt"><span class="sf">[+]</span></a> (1), <b><a href="https://www.geopeitus.ee/silt/muguoht" class="tt">muguoht</a></b><a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;muguoht&#39; );" class="tt"><span class="sf">[+]</span></a> (1), <b><a href="https://www.geopeitus.ee/silt/lumega_leitav" class="tt">lumega_leitav</a></b><a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;lumega_leitav&#39; );" class="tt"><span class="sf">[+]</span></a> (1), <b><a href="https://www.geopeitus.ee/silt/advendiseeria_2021" class="tt">advendiseeria_2021</a></b><a href="javascript:TagCopy( &#39;cache&#39;, &#39;7302&#39;, &#39;advendiseeria_2021&#39; );" class="tt"><span class="sf">[+]</span></a> (1)(<a href="https://www.geopeitus.ee/sildid/aare/7302">täpsemalt</a>)<p></p>
+
+<p><b>Geocaching.com kood:</b> <a target="_new" href="https://www.geocaching.com/seek/cache_details.aspx?wp=GC9JD40">GC9JD40</a></p>
+<p><b>TravelBug'id: </b><span id="gcctb"><a href="javascript:CheckTB(&#39;GC9JD40&#39;);">Kontrolli</a></span></p>
+
+
+<p><b>Logiteadete statistika:</b>
+&nbsp;<a href="https://www.geopeitus.ee/?p=350&amp;c=7302&amp;et=1"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/emoticon_smile.png" class="icon16" alt=""></a> 6 (100,0%)&nbsp;<a href="https://www.geopeitus.ee/?p=350&amp;c=7302&amp;et=2"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/emoticon_unhappy2.png" class="icon16" alt=""></a> 0
+&nbsp;<a href="https://www.geopeitus.ee/?p=350&amp;c=7302&amp;et=3"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/comment.png" class="icon16" alt=""></a> 1
+&nbsp;<a href="https://www.geopeitus.ee/?p=350&amp;c=7302&amp;et=5"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/wrench.png" class="icon16" alt=""></a> 0
+&nbsp;<a href="https://www.geopeitus.ee/?p=350&amp;c=7302&amp;et=6"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/wrench_orange.png" class="icon16" alt=""></a> 0
+&nbsp;<a href="https://www.geopeitus.ee/?p=350&amp;c=7302&amp;et=4"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/exclamation.png" class="icon16" alt=""></a> 0
+&nbsp;<a href="https://www.geopeitus.ee/?p=350&amp;c=7302&amp;et=7"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/calendar_edit.png" class="icon16" alt=""></a> 0
+&nbsp;<a href="https://www.geopeitus.ee/?p=350&amp;c=7302">Kokku:</a> 7
+</p>
+
+
+<p><b>Lähimad aarded:</b>
+<a href="https://www.geopeitus.ee/aare/3270">Terminaator</a> - 0,31km
+<a href="https://www.geopeitus.ee/aare/6098">Roosteuss</a> - 0,45km
+<a href="https://www.geopeitus.ee/aare/5728">Puhu ja pigista</a> - 0,61km
+<a href="https://www.geopeitus.ee/aare/4338">Karlova paadisadam</a> - 0,66km
+<a href="https://www.geopeitus.ee/aare/4408">Tekli</a> - 0,67km
+<a href="https://www.geopeitus.ee/aare/5732">Emajõe kallasraja sillad</a> - 0,69km
+<a href="https://www.geopeitus.ee/aare/5850">Kilk</a> - 0,69km
+<a href="https://www.geopeitus.ee/aare/4402">VK5: Eco, Umberto</a> - 0,69km
+<a href="https://www.geopeitus.ee/aare/3642">Kinomehaaniku</a> - 0,72km
+<a href="https://www.geopeitus.ee/aare/3370">Suure sea</a> - 0,75km
+<a href="https://www.geopeitus.ee/aare/3327">Maksu</a> - 0,78km
+<a href="https://www.geopeitus.ee/aare/5738">Korrutise</a> - 0,80km
+<a href="https://www.geopeitus.ee/aare/5747">Jagatise</a> - 0,84km
+<a href="https://www.geopeitus.ee/aare/6444">Jaapani mõistatus</a> - 0,84km
+<a href="https://www.geopeitus.ee/aare/555">Emajõe sõber</a> - 0,88km
+<a href="https://www.geopeitus.ee/aare/2757">Kuupvõrrandi</a> - 0,90km
+<a href="https://www.geopeitus.ee/aare/6031">Kohina</a> - 0,93km
+<a href="https://www.geopeitus.ee/aare/5772">Georingi</a> - 0,93km
+<a href="https://www.geopeitus.ee/aare/6118">Viisk, põis ja õlekõrs</a> - 0,94km
+<a href="https://www.geopeitus.ee/aare/6846">Käbikuninga: Omadega puntras</a> - 0,94km
+</p>
+<p><i>Viimati muutis:  [errvee] 09.12.21 21:07.27</i></p>
+
+
+<table cellpadding="8" cellspacing="0" border="0">
+<tbody><tr>
+</tr>
+</tbody></table>
+<br>
+
+
+<p><b><a href="https://www.geopeitus.ee/logs/new/c/7302"><img src="./Geopeitus.ee __ Xmas Spirit_files/comments_add.png" class="icon16" border="0" alt=""> Teata otsimisest/leidmisest</a></b></p>
+</div>
+
+	    <div class="eventlog"><div class="admlinks"><span id="e-764281" style="margin-left: 2em;">&nbsp;<a onclick="return false" href="https://www.geopeitus.ee/aare/7302#" data-refid="764281" class="thumbcount"></a>&nbsp;<a href="https://www.geopeitus.ee/aare/7302#" onclick="ThumbSave(&#39;event&#39;,&#39;764281&#39;); return false"><img class="icon16" src="./Geopeitus.ee __ Xmas Spirit_files/thumb.png"></a></span></div><a name="764281" class="tt"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/emoticon_smile.png" class="icon16" alt=""></a> <b>15 detsember 2021</b>&nbsp;leidis&nbsp;<b>Timo</b> [<a href="https://www.geopeitus.ee/?p=400&amp;u=scriimsilm">scriimsilm<img alt="" src="./Geopeitus.ee __ Xmas Spirit_files/premium.png"></a>]<br><p>Leitud, tänud!</p>
+</div>	    <div class="eventlog"><div class="admlinks"><span id="e-764285" style="margin-left: 2em;">&nbsp;<a onclick="return false" href="https://www.geopeitus.ee/aare/7302#" data-refid="764285" class="thumbcount"></a>&nbsp;<a href="https://www.geopeitus.ee/aare/7302#" onclick="ThumbSave(&#39;event&#39;,&#39;764285&#39;); return false"><img class="icon16" src="./Geopeitus.ee __ Xmas Spirit_files/thumb.png"></a></span></div><a name="764285" class="tt"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/emoticon_smile.png" class="icon16" alt=""></a> <b>14 detsember 2021</b>&nbsp;leidis&nbsp;<b>Christine</b> [<a href="https://www.geopeitus.ee/?p=400&amp;u=catiberg">catiberg</a>]<br><p>Vahva pusle koos, kohapeal ka käidud. Aitäh!</p>
+</div>	    <div class="eventlog"><div class="admlinks"><span id="e-764022" style="margin-left: 2em;">&nbsp;<a onclick="return false" href="https://www.geopeitus.ee/aare/7302#" data-refid="764022" class="thumbcount"></a>&nbsp;<a href="https://www.geopeitus.ee/aare/7302#" onclick="ThumbSave(&#39;event&#39;,&#39;764022&#39;); return false"><img class="icon16" src="./Geopeitus.ee __ Xmas Spirit_files/thumb.png"></a></span></div><a name="764022" class="tt"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/emoticon_smile.png" class="icon16" alt=""></a> <b>12 detsember 2021</b>&nbsp;leidis&nbsp;<b>Mikk, Jaanika, Kirke, Kusti</b> [<a href="https://www.geopeitus.ee/?p=400&amp;u=silmsirkel">silmsirkel</a>]<br><p>Päris värsket aaret on lust logida. Aardeni oli lai rada sisse tallutud, logimiskoht selgelt äratuntav. Talvise otsingu rõõmud. Aitäh!</p>
+</div>	    <div class="eventlog"><div class="admlinks"><span id="e-763694" style="margin-left: 2em;">&nbsp;<a onclick="return false" href="https://www.geopeitus.ee/aare/7302#" data-refid="763694" class="thumbcount">6</a>&nbsp;<a href="https://www.geopeitus.ee/aare/7302#" onclick="ThumbSave(&#39;event&#39;,&#39;763694&#39;); return false"><img class="icon16" src="./Geopeitus.ee __ Xmas Spirit_files/thumb.png"></a></span></div><a name="763694" class="tt"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/emoticon_smile.png" class="icon16" alt=""></a> <b> 9 detsember 2021</b>&nbsp;leidis&nbsp;<b>Katre, Raido</b> [<a href="https://www.geopeitus.ee/?p=400&amp;u=sedemicra">sedemicra</a>]<br><p>Sellel päeval oli juba mõnda aega silm peal - see aasta ikkagi ainus advendi seeria oma, mille taga Tartu kirjas. Päris mitmeks asjaks olin valmis, auto soojaks aetud ja täiesti stardivalmis, aga vot puslet ei oodanud. Telefonis isegi ei üritanud, sest nii palju ma ennast ei vihka. Õnneks ei olnud stardivalmis autoga maja eest veel ära sõitnud, seega sai toas tükid ritta seatud. Mõlemal osapoolel oli see sama kiire töö ja varsti saigi lõppu liigutus. Anna ning Heiki astusid just autost välja, kui me lähenesime. Kohmitsesin veel telefoniga (paksud kindad ikkagi), kui nad juba nime kirja panid. STF läks meil pastaka streikimise kiuste kirja 21:35. Pärast sai veel veidi geojuttu aetud, aga kuna rohkemat rahvast ei ilmunud, siis pikalt külmetama ei jäänud (riietuse poolest olin siiski valmis selle temperatuuriga kõndimiseks, mitte seismiseks). Aitäh peitjale!</p>
+</div>	    <div class="eventlog"><div class="admlinks"><span id="e-763691" style="margin-left: 2em;">&nbsp;<a onclick="return false" href="https://www.geopeitus.ee/aare/7302#" data-refid="763691" class="thumbcount">2</a>&nbsp;<a href="https://www.geopeitus.ee/aare/7302#" onclick="ThumbSave(&#39;event&#39;,&#39;763691&#39;); return false"><img class="icon16" src="./Geopeitus.ee __ Xmas Spirit_files/thumb.png"></a></span></div><a name="763691" class="tt"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/emoticon_smile.png" class="icon16" alt=""></a> <b> 9 detsember 2021</b>&nbsp;leidis&nbsp;<b>Anna ja Heiki</b> [<a href="https://www.geopeitus.ee/?p=400&amp;u=heiki86">heiki86</a>]<br><p>Plaan seda üht aaret jahtida oli juba ammu paigas ja peaaegu oleks teised plaanid seda sagama pannud. Millegi pärast ootasin midagi Öös on asju sarnast aaret, aga puslet ei osanud oodata. Telefonis oli päris piin seda kokku panna, seega küsisin välist abi. Anna sai pildi kokku selle ajaga, kui mulle lõpu koordinaadid kirjutati. Mul endal oli selle pooltunniga vaevu pildi raamid koos. Kohal jõudsime autost välja, kui järgmine auto jõudis kohale. Mina vahtisin rohkem niisama ringi, aga Anna sai konteineri jälgede järgi kergelt kätte ja oli väga rõõmus ftf-i üle. Seejärel rääkisime natuke geojuttu ja läksime laiali kui rohkem rahvast ei tulnud leidu logima. Tänud!</p>
+</div>	    <div class="eventlog"><div class="admlinks"><span id="e-763689" style="margin-left: 2em;">&nbsp;<a onclick="return false" href="https://www.geopeitus.ee/aare/7302#" data-refid="763689" class="thumbcount">6</a>&nbsp;<a href="https://www.geopeitus.ee/aare/7302#" onclick="ThumbSave(&#39;event&#39;,&#39;763689&#39;); return false"><img class="icon16" src="./Geopeitus.ee __ Xmas Spirit_files/thumb.png"></a></span></div><a name="763689" class="tt"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/emoticon_smile.png" class="icon16" alt=""></a> <b> 9 detsember 2021</b>&nbsp;leidis&nbsp;<b>Heiki ja Anna</b> [<a href="https://www.geopeitus.ee/?p=400&amp;u=taevamanna">taevamanna</a>]<br><p>Tuleb rõõmustada nende advendiaarete üle mis Tartusse pudenevad ja sellest maksimaalselt osa võtta. Pidasime plaani, noppisime mõned soojendusaarded ja olime kavalalt autos stardivalmis. Ja siis tuleb pusle! Haa, noh mis seal ikka, tuleb siis telefonis sellega hakkama saada. Selle ajaga kui mina pildi kokku sain, pani Heiki servad kokku. Koordinaate nähes olime oma asukohaga kümnesse pannud ja mõne minuti pärast  olime kohal. Enne kui autost välja saime, nägime teist ekipaaži lähenemas ja tähendas ainult seda, et ruttu-ruttu tuleb otsima hakata. Mina lähenesin vaistuga ja teisest kohast jäi tops pihku. Logiraamatut lahtirullides selgus, et pingutused on vilja kandnud ja 21:33 kritseldasin poolkülmunud käega FTFi esimesed harakajalad logiraamatusse. Tõeline kirss tordil!  Panime topsi tagasi ja lasime teisel tiimil ka otsida.  Jutustasime ja vahetasime geomuljeid ja ootasime et ehk saabub ka keegi kolmas, aga ei kedagi. Külm hakkas ka. Suured tänud peitjale neljapäeva õhtusse elevuse ja põnevuse pakkumise eest ning pikka iga aardele! </p>
+</div>	    <div class="eventlog"><div class="admlinks"><span id="e-763678" style="margin-left: 2em;">&nbsp;<a onclick="return false" href="https://www.geopeitus.ee/aare/7302#" data-refid="763678" class="thumbcount"></a>&nbsp;<a href="https://www.geopeitus.ee/aare/7302#" onclick="ThumbSave(&#39;event&#39;,&#39;763678&#39;); return false"><img class="icon16" src="./Geopeitus.ee __ Xmas Spirit_files/thumb.png"></a></span></div><a name="763678" class="tt"><img border="0" src="./Geopeitus.ee __ Xmas Spirit_files/comment.png" class="icon16" alt=""></a> <b> 9 detsember 2021</b>&nbsp;kommenteeris&nbsp;<b>Carolina</b> [<a href="https://www.geopeitus.ee/?p=400&amp;u=caro">caro<img alt="" src="./Geopeitus.ee __ Xmas Spirit_files/premium.png"></a>]<br>Aare automaatselt avaldatud.</div>
+</div>
+<div style="clear:left;"> </div>
+</div>
+
+<div id="footer">
+    Geopeitus MTÜ |
+<script type="text/javascript">document.write(String.fromCharCode(105,110));document.write(String.fromCharCode(102,111,64,103,101,111,112));document.write(String.fromCharCode(101,105,116,117,115,46,101,101));</script>info@geopeitus.ee
+    | <a href="https://www.geopeitus.ee/wiki/privaatsuspoliis">Privaatsuspoliitika</a>
+	| <a href="https://www.geopeitus.ee/foorum/posting.php?9">Kiri administraatoritele</a>
+</div>
+
+</div>
+
+
+<div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div><div id="tooltip" class="" style="display: none; top: 191px; left: 523px; right: auto;"><h3></h3><div class="body">Esmane avaldamine: 09.12.21 21:00.01</div><div class="url" style="display: none;"></div></div></body></html>

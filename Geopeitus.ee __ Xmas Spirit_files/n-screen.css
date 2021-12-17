@@ -1,0 +1,629 @@
+/* 
+    geopeitus 2009 
+    (c) 2009 Nex Data Systems
+*/
+
+html {min-height:100%; margin-bottom:1px;}
+body {
+    _background:#F6FFE0 url(/ug/n/bg.png) repeat-x top left;
+    background:#BDD684 url(/ug/n/bg2.png) repeat-x top left fixed;
+    color:#404040; 
+    font:80% Verdana,Tahoma,Arial,sans-serif; 
+    /* margin:10px auto;  */
+    padding:0; 
+    text-align: center;
+    line-height: normal;
+}
+
+body.iframe {
+    background: #fff none;
+    text-align: left;
+}
+
+#wrap {
+    color:#404040; 
+    margin:10px auto; 
+    width:960px; 
+	background:#fff url(/ug/gplogo_side_b.png) no-repeat bottom left; 
+    padding: 0px 0 5px 0; 
+    border:1px solid #95AB63; 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+#header {
+    position: relative;
+    height: 60px;
+    width:  950px;
+    margin: 5px auto 0px;
+    padding: 0px;
+}
+
+#header div.left {
+    padding: 0;
+   float: left;
+   clear: left;
+}
+
+#header div.left a {
+    padding: 11px 13px;
+    display: block;
+}
+
+#header div.right {
+    text-align: left;
+    float: right;
+    clear: right;
+    border: 0px solid #c00;
+    margin-right: 5px;
+}
+
+#menubar {
+    background: #95AB63 url(/ug/n/sh1.png) repeat-x top left;
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+    width: 938px;
+    height: 24px;
+    border: 1px solid #BDD684;
+    font-weight: bold;
+    color: white;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+#menubar a {
+    color: white;
+    text-decoration: none;
+}
+#menubar a:hover {
+    color: #F6FFE0;
+    text-decoration: underline;
+}
+#mapmenu, #mainmenu {
+    float: left;
+    height: 24px;
+    line-height: 24px;
+}
+#rightmenu {
+    float: right;
+    height: 24px;
+    line-height: 24px;
+}
+#mapmenu i {
+    line-height: 24px;
+    margin-right: 10px;
+}
+
+#t-left {
+    clear:left;
+    float:left;
+    margin:0 0 0 0px;
+    padding:0 0px 200px 5px;
+    width:200px;
+    font-size: 90%;
+}
+
+#t-left > div {
+    margin: 0 0 5px 0;
+    padding: 0px 5px 5px 5px;
+    border: 1px solid #BDD684;
+    background: #f6ffe0 url(/ug/n/sh2.png) repeat-x top left;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+#t-left div div, #t-left div div div {
+    border: 0;
+    background: transparent;
+    font-size: 100%;
+}
+
+#t-content-wrap {
+	background:#fff; 
+	line-height:1.5em; 
+	margin: 0px 5px 10px 215px; 
+	width: 735px; 
+	padding:1px 0; 
+	text-align:left;
+}
+#t-content {float:left; width: 735px;}
+
+#footer {
+/*    background: #E2F0D6;
+    border-top:1px solid #95AB63; 
+    border-bottom:1px solid #95AB63; */
+    clear:both; 
+    color:#333; 
+    font-size:0.9em; 
+    margin: 0px auto; 
+    padding:5px 0 5px 0; 
+    text-align:center; 
+    width:950px;
+    background: #f6ffe0 url(/ug/n/sh2.png) repeat-x top left;
+    border: 1px solid #BDD684;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+#footer a {color:#333; text-decoration:none;}
+#footer a:hover {color:#333; text-decoration:underline;}
+
+/* typography */
+h1 {font-size:1.5em; font-weight:normal; _letter-spacing:-1px; margin:8px 0 10px 0px; padding:0; color:#4f7200;}
+h1 a, h2 a, h3 a, h4 a, h5 a {color:#4f7200; text-decoration:none;}
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover {color:#4f7200; text-decoration:underline;}
+h2 {font-size:1.3em; font-weight:400; margin:6px 0; padding:0; color:#4f7200;}
+p {font-size:1em; font-weight:normal; margin:5px 0 5px; padding:0; color:#000;}
+p.title {
+    font-weight: bold;
+}
+a, a:visited {
+    text-decoration: none;
+    color: #4f7200;
+}
+a:hover {
+    color: #4f7200;
+    text-decoration: underline;
+}
+
+a.button {
+    background: #95AB63 url(/ug/n/sh1.png) repeat-x top left;
+    margin: 0px 0px 5px 5px;
+    padding: 5px;
+    border: 2px solid #999;
+    font-weight: bold;
+    color: white;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+a.button:hover {
+    text-decoration: none;
+    border: 2px solid #ccc;
+}
+
+ol, ul {
+  margin-left: 1.75em;
+  padding: 0;
+}
+ol li {
+    /*giving OL's LIs generated numbers*/
+    list-style: decimal outside;        
+}
+ul li {
+    /*giving UL's LIs generated disc markers*/
+    list-style: disc outside;
+}
+
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
+
+.sf { 
+  font-size: 75%;
+}
+
+img.icon16, input.icon16 {			/* For 16x16 file-type icons */
+   vertical-align:  -2px;
+}
+
+/* Tables */
+
+table {
+border-collapse: collapse;
+}
+
+table td, table th {
+   text-align:      left;
+   vertical-align:  top;
+   margin:          0;
+   padding:         0.25em 0.25em;
+}
+
+td p {
+    margin-bottom: 0px;
+}
+
+
+table.simple {
+   color:           inherit;
+   background:      inherit;	/* Don't make tables transparent */
+   border-collapse: collapse;
+   border-spacing:  0;
+   empty-cells:     show;
+   margin:          0.5em;
+   padding:         0;
+   border-top:		1px solid #bdd684;
+   border-bottom:          1px solid #bdd684;
+}
+
+table.simple caption {
+   text-align:      center;
+   caption-side:    top;
+   margin:          0 2.5em 0.75em;
+   padding:         0;
+   border:          none;
+}
+
+table.simple td,
+table.simple th {
+   text-align:      center;
+   vertical-align:  middle;
+   margin:          0;
+   padding:         0.25em 0.5em;
+   background:      inherit;
+}
+table.simple th {
+   border-top:		1px solid #bdd684;
+   border-bottom:	2px solid #bdd684;
+   padding:         0.5em 0.5em;
+}
+
+table.simple tr.highlight, table.simple tr.highlight td
+{
+   color:           inherit;
+   background:      #f5f5f5;
+}
+
+table.simple th, table.simple td.highlight, table.simple th.highlight, table.simple tr:hover, table.simple tr:hover td
+{
+   color:           inherit;
+   background:      #E2F0D6;
+   _background:      #f5f5f5;
+}
+
+
+table.simple td.lighter,
+table.simple th.lighter {
+   color:           inherit;
+   background:      #F8F8F8;
+}
+
+table.simple td.left,
+table.simple th.left {
+   text-align:      left;
+}
+
+table.simple td.center,
+table.simple th.center {
+   text-align:      center;
+}
+
+table.simple td.right,
+table.simple th.right {
+   text-align:      right;
+}
+
+/* tooltips */
+#tooltip {
+    position: absolute;
+    z-index: 3000;
+    padding: 5px;
+    opacity: 0.95;
+    max-width: 350px;
+    text-align: left;
+    border: 1px solid #BDD684;
+    background: #E2F0D6;
+    color: #000;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+/*
+    border: 1px solid #BDD684;
+    background: #F6FFE0;
+*/
+}
+#tooltip h3, #tooltip div { margin: 0; }
+
+/* event pics */
+
+div.evpic {
+  float: left;
+  max-width: 150px;
+  margin: 0.75em 1.5em 0.75em 0;
+}
+
+.evpic p, .cachepic p {
+    font-size: 0.75em;
+    line-height: normal;
+    text-align: left;
+    font-weight: bold;
+    margin: 0;
+}
+
+div.clearer {
+  clear: both;
+}
+
+/* t-left pics */
+div.t-leftpic {
+  max-width: 190px;
+  margin: 0.75em auto;
+  text-align: center;
+}
+div.t-leftpic p {
+  _text-align: left;
+  font-weight: normal;
+  margin: 0;
+}
+
+/* gpform */
+
+form#foorum-login-form fieldset { 
+    margin-bottom: 0px;
+    border: 0px;
+    text-align: left;
+}
+form#foorum-login-form label { 
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+form#foorum-login-form input { 
+    margin: 1px;
+}
+form.gpform fieldset { margin-bottom: 10px; }
+    
+form.gpform legend {
+    padding: 0 2px;
+    font-weight: bold;
+    _margin: 0 -7px; /* IE Win */
+    }
+
+form.gpform label {
+    display: inline-block;
+    line-height: 1.8;
+    vertical-align: top;
+    text-align: right;
+    font-weight: bold;
+}
+
+form.gpform label.left {
+    text-align: left;
+    width: auto;
+    font-weight: normal;
+}
+
+form.gpform label {
+  width: 200px; /* Width of labels */
+}
+form.gpform fieldset fieldset label {
+  margin-left: 203px; /* Width plus 3 (html space) */
+    text-align: left;
+}
+form.gpform fieldset ol {
+    margin: 0;
+    padding: 0;
+    }
+    
+form.gpform fieldset li {
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+    vertical-align: top;
+    line-height: 1.8;
+    }
+    
+form.gpform fieldset fieldset {
+    border: none;
+    margin: 3px 0 0;
+    }
+    
+form.gpform fieldset fieldset legend {
+    padding: 0 0 5px;
+    font-weight: bold;
+    }
+    
+form.gpform fieldset fieldset label {
+    display: block;
+    width: auto;
+    }
+
+form.gpform input.inputtext, form.gpform textarea.inputtext {
+    width: 200px;
+}
+
+/* phorum */
+.phorum-search {
+background-repeat: no-repeat;
+background-position: 8px 4px;
+padding-left: 32px;
+}
+
+/* img floats */
+img.right {
+    float:right;
+    padding: 1em;
+}
+img.left {
+    float:left;
+    clear: left;
+    padding: 2px 10px 2px 2px;
+}
+
+/* eventlog */
+div.eventlog {
+    margin: 0 0 10px 0;
+    padding: 3px 5px 5px 5px;
+    border: 1px solid #ccc;
+    background: #fff url(/ug/n/sh3.png) repeat-x top left;
+}
+
+div.eventlog-archived {
+    margin: 0 0 10px 0;
+    padding: 3px 5px 5px 5px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    color: #ccc;
+}
+
+.center {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.admlinks {
+    float: right;
+}
+
+.fleft {
+    float: left;
+}
+
+.aks {
+    text-decoration: line-through;
+}
+
+.arh {
+    text-decoration: line-through;
+    color: red;
+}
+
+.video object {
+    margin: 5px 0;
+}
+
+#tagadd {
+    border: 1px solid #BDD684;
+    margin: 15px;
+    padding: 0.5em 1em 1em 1em;
+    background: #f6ffe0 url(/ug/n/sh2.png) repeat-x top left;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.decrypthint {
+    display: none;
+}
+
+div.error {
+    font-weight: bold;
+    color: #F00;
+    padding: 3px 5px 5px 32px;
+    border: 1px solid #f00;
+    background: #ff0 url(/ug/icons/exclamation.png) no-repeat 8px 4px;
+    margin: 10px 0 10px 0;
+}
+
+div.info {
+    padding: 3px 5px 5px 32px;
+    border: 1px solid #ccc;
+    background: #eee url(/ug/icons/information.png) no-repeat 8px 4px;
+    margin: 10px 0 10px 0;
+}
+
+#mynote-wrap {
+    display: block;
+    border: 1px solid #ccc;
+    background:url("/ug/n/sh3.png") repeat-x scroll left top #FFFFFF;
+    padding:3px 5px 5px;
+}
+
+#mynote {
+    width: 100%; 
+    margin: 0; 
+    padding: 0; 
+    border-width: 0;
+    background: transparent;
+}
+
+#mynote-save, #mynote-status, #mynote-add {
+    margin-left: 20px;
+}
+
+.nowrap {
+    white-space:nowrap;
+}
+
+.cache-description {
+    margin: 10px 0 10px 0;
+    padding: 3px 5px 5px 5px;
+    border: 1px solid #ccc;
+    background: #fff url(/ug/n/sh3.png) repeat-x top left;
+    clear: both;
+}
+
+.cache-description p {
+    margin: 10px 0;
+}
+
+.cache-description h1 {
+    margin: 20px 0 8px;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.cache-description h2 {
+    margin: 15px 0 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.gk {
+    max-width: 540px;
+    margin-top: 20px;
+}
+
+.gk-form {
+    width: 270px;
+    float: left;
+    text-align:center;
+}
+
+/*.gk-map img {
+    margin: 20px auto 8px;
+}*/
+
+#gk-result {
+    width: 90%;
+    margin: 20px auto 8px;
+    font-size: 1.6em;
+    font-style:italic;
+}
+
+#gk-result .success {
+    color: green;
+}
+
+#gk-result .fail {
+    color: red;
+}
+
+.simple .fail {
+	background: red;
+}
+
+.thumbcount {
+	font-weight: bold;
+}
+
+.message-user-info .thumbcount {
+	font-size: 1.2em;
+}
+
+blockquote {
+	padding-left: 15px;
+	border-left: 5px solid #ccc;
+}
+
+pre {
+	overflow: auto;
+	font-size: 1.2em;
+	background-color: #F7F9FA;
+	border: 1px dashed #999966;
+	padding: 0.5em;
+}
+
+#random_tip {
+    color: #000000;
+    font-weight: normal;
+    margin: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
